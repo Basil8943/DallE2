@@ -6,7 +6,7 @@ import streamlit as st
 
 openai.api_key = st.secrets["OPEN_AI_KEY"]
 
-biodatas=""
+biodata=""
 url=""
 global_message ="Please enter the password to continue..!"
 
@@ -26,7 +26,6 @@ def check_password():
         )
         return False
     elif not st.session_state["password_correct"]:
-        # Password not correct, show input + error.
         st.text_input(
             "Password", type="password", on_change=password_entered, key="password"
         )
@@ -43,13 +42,6 @@ password_valid = check_password()
 if not password_valid:
         st.error(global_message)
 
-
-
-
-
-
-
-
 def generateAvatar(description):
     prompt = "A photorealistic image of an single person - who is an executive coach with the following description"+description
 
@@ -58,7 +50,7 @@ def generateAvatar(description):
     url = response["data"][0]["url"]
     width = 400
     height = 500
-    st.markdown(f'<img src="{url}" width="{width}" height="{height}">', unsafe_allow_html=True)
+    st.markdown(f'<img src="{url}" width="{width}" height="{height}" style="border-radius: 50%; width: 300px; height: 300px;">', unsafe_allow_html=True)
 
 
 
@@ -75,8 +67,8 @@ def generateAvatar(description):
     )    
     
 
-    biodatas = response['choices'][0]['message']['content']
-    st.write(biodatas)
+    biodata = response['choices'][0]['message']['content']
+    st.write(biodata)
 
 st.header("Generate AI Image")
 st.markdown("---")
