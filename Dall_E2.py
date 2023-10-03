@@ -8,19 +8,46 @@ openai.api_key = st.secrets["OPEN_AI_KEY"]
 
 biodatas=""
 url=""
+global_message ="Please enter the password to continue..!"
+
+def check_password():
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if st.session_state["password"] == st.secrets["passwords"]["password"]:
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # don't store password
+        else:
+            st.session_state["password_correct"] = False
+
+    if "password_correct" not in st.session_state:
+        # First run, show input for password.
+        st.text_input(
+            "Password", type="password", on_change=password_entered, key="password"
+        )
+        return False
+    elif not st.session_state["password_correct"]:
+        # Password not correct, show input + error.
+        st.text_input(
+            "Password", type="password", on_change=password_entered, key="password"
+        )
+        global global_message
+        global_message = "😕 Password incorrect"
+        return False
+    else:
+        # Password correct.
+        return True
+
+password_valid = check_password()
 
 
-st.header("Generate AI Image")
-st.markdown("---")
+if not password_valid:
+        st.error(global_message)
 
-description = st.text_input(
-    label='Enter description here...',
-    max_chars=300,
-    key='coach-description',
-    help='This is a help tooltip for the input field.'
-)
 
-button_clicked = st.button("Generate!", on_click=lambda: generateAvatar(description))
+
+
+
+
 
 
 def generateAvatar(description):
@@ -50,3 +77,17 @@ def generateAvatar(description):
 
     biodatas = response['choices'][0]['message']['content']
     st.write(biodatas)
+
+st.header("Generate AI Image")
+st.markdown("---")
+
+description = st.text_input(
+    label='Enter description here...',
+    max_chars=300,
+    key='coach-description',
+    help='This is a help tooltip for the input field.',
+    disabled=not password_valid
+)
+
+if st.button("Generate!", disabled=not password_valid):
+    generateAvatar(description)
