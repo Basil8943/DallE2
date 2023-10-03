@@ -7,10 +7,12 @@ import os
 
 openai.api_key = st.secrets["OPEN_AI_KEY"]
 
+
+
 biodata=""
 url=""
 global_message ="Please enter the password to continue..!"
-
+st.markdown("<style>.st-emotion-cache-5rimss{text-align:center;}</style>",unsafe_allow_html=True)
 def check_password():
     def password_entered():
         """Checks whether a password entered by the user is correct."""
