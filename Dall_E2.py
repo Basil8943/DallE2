@@ -4,8 +4,6 @@ import openai
 openai.api_key = st.secrets("OPEN_AI_KEY")
 
 import streamlit as st
-
-
 biodatas=""
 url=""
 
