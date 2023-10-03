@@ -13,7 +13,7 @@ global_message ="Please enter the password to continue..!"
 def check_password():
     def password_entered():
         """Checks whether a password entered by the user is correct."""
-        if st.session_state["password"] == st.secrets["passwords"].get("password", "default_value");
+        if st.session_state["password"] == st.secrets["password"].get("password", "default_value");
             st.session_state["password_correct"] = True
             del st.session_state["password"]
         else:
