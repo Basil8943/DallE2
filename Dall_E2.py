@@ -1,9 +1,11 @@
 
 import openai
 # Set your OpenAI API key
+import streamlit as st
+
+
 openai.api_key = st.secrets("OPEN_AI_KEY")
 
-import streamlit as st
 biodatas=""
 url=""
 
